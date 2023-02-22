@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0
 }
 
 body {
@@ -10,12 +12,84 @@ body {
 }
 
 header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
   text-align: end;
+  min-height: 80vh;
+  background-image: url("../img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+header .search, header .back {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  color: yellow;
+  text-align: center;
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+button {
+  padding: 1rem;
+  background-color: transparent;
+  border: 1px solid #FFD029;
+  box-shadow: 1px 1px 15px 5px #FFD029, -1px -1px 15px 5px #ffd129, 
+  3px 3px 15px 5px #816913, -3px -3px 15px 5px #816913;
+  transition: all .5s ease;
+}
+
+button:hover {
+  background-color: rgba(255, 208, 41, 0.75);
+  transform: scale(1.1);
+  border-color: #190B22;
+}
+
+button:hover a {
+  color: rgba(25, 11, 34, 0.8)
+}
+
+button a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #FFD029;
+  letter-spacing: 0.6em;
+  font-weight: 700;
+  transition: all .5s ease;
+}
+
+header .search label {
+  backdrop-filter:brightness(0.25);
+  padding: 1rem
+}
+
+header .search input {
+  width: 323px;
+  height: 30px;
+}
+
+header h1, header h2 {
+  backdrop-filter:brightness(0.5);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+main {
+  background-image: url("../img/stars-1845140.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 footer {
   display: flex;
   justify-content: center;
+  min-height: 5rem;
+  align-items: center;
 }
 
 h1 {
@@ -29,7 +103,7 @@ h1 {
   text-align: right;
 }
 
-h2 {
+h2, label {
   font-family: 'Lora';
   font-style: normal;
   font-weight: 400;
@@ -45,11 +119,8 @@ h3 {
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 100%;
-  /* identical to box height, or 18px */
   letter-spacing: 0.09em;
   color: #FFFFFF;
-  margin-bottom: 0;
 }
 
 p {
@@ -58,121 +129,161 @@ p {
   font-weight: 300;
   font-size: 18px;
   line-height: 170%;
-  /* or 31px */
-  color: #FFFFFF;
+  color: #ffffff;
+}
+
+/*Planets in main*/
+.planets {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+}
+
+
+.planets figure img {
+  width: 100%;
+}
+
+.planet_sun img {
+  max-width: 1278px;
+}
+
+.planet_mercury img {
+  max-width: 14px;
+}
+
+.planet_venus img {
+  max-width: 26px;
+}
+
+.planet_earth img {
+  max-width: 28px;
+}
+
+.planet_mars img {
+  max-width: 14px;
+}
+
+.planet_jupiter img {
+  max-width: 188px;
+}
+
+.planet_saturn img {
+  max-width: 150px;
+}
+
+.planet_uranus img {
+  max-width: 66px;
+}
+
+.planet_neptun img {
+  max-width: 66px;
+}
+
+.planets figure img:hover {
+  animation: bounce .5s ease-in-out infinite alternate
+}
+
+.planets figure img::before {
+  content: " ";
+  width: 100px;
+  background-color: #FFD029;
+}
+/*Module container*/
+
+
+.planet {
+  display: none;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: absolute;
+  top: 90vh;
+  max-width: 50%;
+  width: 100%;
+  min-height: 400px;
+  left: 25%;
+  z-index: 200;
+  background-color: #0C164D;
+  padding: 1rem;
+  box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.5), 
+  -10px -10px 15px 10px rgba(0, 0, 0, 0.5);
+  animation: zoomIn .5s ease forwards;
+}
+
+.show button {
+  align-self: center;
 }
 
 .info_box {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  height: 225px
+  height: 170px;
+  align-items: flex-start;
 }
 
+.info_box h3 {
+  padding-top: 1rem;
+}
 .info_box p {
   letter-spacing: 0.16em;
 }
 
-.planets {
-  display: flex;
-  align-items: center;
-  width: 2600px;
-  height: 900px;
-  justify-content: space-between;
-  transform: translateX(-1160px);
-}
 
-.planet {
-  display: none;
-  margin-top: 0;
-  padding-top: 0;
-}
-
-figure {
-  border-radius: 50%;
-  max-width: 100%;
-  width: 100%;
-}
-.planet_sun {
-  width: 1278px;
-  height: 1278px;
-  background-color: #FFD029;
-}
-
-.planet_mercury {
-  width: 14px;
-  height: 14px;
-  background-color: #888888;
-}
-
-.planet_venus {
-  width: 26px;
-  height: 26px;
-  background-color:  #E7CDCD;
-}
-
-.planet_earth {
-  width: 28px;
-  height: 28px;
-  background-color:  #428ED5;
-}
-
-.planet_mars {
-  width: 14px;
-  height: 14px;
-  background-color: #EF5F5F;
-}
-
+/*Exit button in module*/
 .exit {
   color: white;
   font-size: 40px;
   text-align: right;
   padding: 1rem;
-  margin: 0
 }
 
-.planet_jupiter {
-  width: 188px;
-  height: 188px;
-  background-color:  #E29468;
+ul {
+  color: white;
+  list-style-type: none;
 }
 
-.planet_saturn {
-  width: 144px;
-  height: 144px;
-  background-color: #C7AA72;
+.planet_info {
+  max-width: 75%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  margin: auto;
+  padding: 1rem
 }
 
-.planet_saturn::before {
-  position: absolute;
-  content: " ";
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: transparent;
-  border: 2px solid white;
-  transform: rotateX(-85deg) rotateY(20deg);
+.planet_info p {
+  padding-bottom: 1rem;
+}
+.planet_info h1, .planet_info h2 {
+  backdrop-filter: none;
 }
 
-.planet_uranus {
-  width: 66px;
-  height: 66px;
-  background-color: #C9D4F1;
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: 
+    scale(1.5);
+  }
+  
 }
 
-.planet_neptun {
-  width: 66px;
-  height: 66px;
-  background-color: #7A91A7;
-}
+@keyframes zoomIn {
+  0% {
+    transform: scale(0);
+  }
 
-.planets__container {
-  display: none;
-  position: absolute;
-  top: 20%;
-  right: 3rem;
-  left:3rem;
-  z-index: 200;
-  background-color: #0C164D;
-  padding: 1rem;
+  100% {
+    transform: 
+    scale(1);
+  }
+  
 }
