@@ -85,19 +85,10 @@ function showPlanets(planets) {
     </section>
     `
     planetsContainer.appendChild(planetInfo)
-    let nextPage = document.createElement("button")
-    nextPage.setAttribute("class", "btn")
-    nextPage.innerHTML = `<a href="pages/planet.html">Läs mer</a>`
+    createLinkBtn(planet)
     planetInfo.appendChild(nextPage)
     
     showPlanetsOnClick(planet, planetInfo)
-    
-    nextPage.addEventListener("click", () => {
-      planetSave = []
-      planetSave.push(planet)
-      localStorage.setItem("planets", JSON.stringify(planetSave))
-      console.log(planet)
-    })
 
     let exitBtn = document.querySelectorAll(".exit") 
     exitBtn.forEach(button => {
@@ -107,7 +98,6 @@ function showPlanets(planets) {
     })
   })
 }
-
 
 //Show planets in UI if right id
 function showPlanetsOnClick(planet, planetInfo) {
@@ -121,7 +111,7 @@ function showPlanetsOnClick(planet, planetInfo) {
   })
 }
 
-
+let nextPage
 //Create sections for search results
 function showSearchResults(searchResult) {
   document.querySelector(".results").innerHTML = " "
@@ -132,32 +122,44 @@ function showSearchResults(searchResult) {
       planetInfo.classList.add("showSearch")
       planetInfo.innerHTML = `
       <section>
+      <div class="flex-row">
+      <p class=sides>1/1</p>
       <p class="exit">X</p>
+      </div>
       <h1>${planet.name}</h1>
       <hr>
       <h2>${planet.latinName}</h2>
       </section>
       `
       document.querySelector(".results").appendChild(planetInfo)
-      let nextPage = document.createElement("button")
-      nextPage.setAttribute("class", "btn")
-      nextPage.innerHTML = `<a href="pages/planet.html">Läs mer</a>`
+      
+      createLinkBtn(planet)
       planetInfo.appendChild(nextPage)
-
-      nextPage.addEventListener("click", () => {
-        planetSave = []
-        planetSave.push(planet)
-        localStorage.setItem("planets", JSON.stringify(planetSave))
-      })
 
       let exitBtn = document.querySelectorAll(".exit") 
       exitBtn.forEach(button => {
         button.addEventListener("click", () => {
-          planetInfo.classList.remove("show")
+          document.querySelector(".display__results").style.display = "none"
         })
       })
     })
   }
+}
+function createLinkBtn (planet) {
+      nextPage = document.createElement("button")
+      nextPage.setAttribute("class", "btn")
+      nextPage.innerHTML = `<a href="pages/planet.html">Läs mer</a>`
+      saveToLocalStorage(planet, nextPage)
+      return nextPage
+}
+
+function saveToLocalStorage(planet, nextPage) {
+  nextPage.addEventListener("click", () => {
+    planetSave = []
+    planetSave.push(planet)
+    localStorage.setItem("planets", JSON.stringify(planetSave))
+    console.log(planet)
+  })
 }
 
 //Creating carousel
@@ -175,13 +177,23 @@ function carousel(searchResult) {
   }
 }
 
+function updateNoOfResults(current, total) {
+  let noOfResults = document.querySelectorAll(".sides")
+  noOfResults.forEach(noOfResult => {  
+    noOfResult.innerHTML = `${current} / ${total}`})
+
+}
 //Update what result to show in carousel
+
+// -----------------------OBS !! ADD NO OF PAGES HERE !!! ---------------------------------------
 function updateResult() {
+  console.log(current + "now")
   let searchResults = document.querySelectorAll(".results .showSearch")
   for (let i = 0; i < searchResults.length; i++) {
     searchResults[i].style.display = "none"
     if ((current - 1) === i) {
       searchResults[i].style.display = "flex"
+      updateNoOfResults(current, searchResults.length)
     }
   }
 }

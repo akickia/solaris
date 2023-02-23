@@ -17,8 +17,8 @@ header {
   align-items: stretch;
   justify-content: space-between;
   text-align: end;
-  min-height: 80vh;
-  background-image: url("../img/background.jpg");
+  min-height: 60vh;
+  background-image: url("../img/background.jpg");;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -240,11 +240,19 @@ p {
   animation: zoomIn .5s ease forwards;
 }
 
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+
 .display__results {
   display: none;
   background-color: transparent;
   width: 700px;
   margin: auto;
+  margin-bottom: -15rem;
   align-items: center;
   justify-content: center;
 }
@@ -303,9 +311,8 @@ button:disabled {
 /*Exit button in module*/
 .exit {
   color: white;
-  font-size: 40px;
-  text-align: right;
-  padding: 1rem;
+  font-size: 32px;
+  text-align: end;
 }
 
 ul {
