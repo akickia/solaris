@@ -1,6 +1,11 @@
 let planets = []
 let planetClick = document.querySelectorAll(".planets figure")
 let planetsContainer = document.querySelector(".planets__container")
+let planetName
+let isIncluded
+let searchResult = []
+let prevBtn = document.querySelector(".prev")
+let nextBtn = document.querySelector(".next")
 
 async function fetchData() {
   try {
@@ -57,7 +62,6 @@ planets.forEach(planet => {
   })
   
 })
-searchPlanets(planets)
 }
 
 
@@ -75,28 +79,25 @@ function showPlanetsOnClick(planet, planetInfo) {
 }
 
 
-
-let searchResult = []
 //Search
-function searchPlanets(planets) {
   let inputEl = document.querySelector("input")
   inputEl.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       let searchResult = []
       let value = inputEl.value.toLowerCase()
       planets.forEach(planet => {
-        let planetName = planet.name.toLowerCase()
-        let isIncluded = planetName.includes(value)
+        planetName = planet.name.toLowerCase()
+        isIncluded = planetName.includes(value)
         if ((isIncluded) && (!searchResult.includes(planet))) {
         searchResult.push(planet)
-        console.log(searchResult)
-        showSearchResults(searchResult)
       }
-  })
-  
+  }) 
+  showSearchResults(searchResult)
+  carousel(searchResult)
 }
+})
 
-})}
+
 
 function showSearchResults(searchResult) {
   document.querySelector(".results").innerHTML = " "
@@ -104,7 +105,7 @@ function showSearchResults(searchResult) {
     searchResult.forEach(planet => {
       let planetInfo = document.createElement("section")
       planetInfo.setAttribute("class", "planet")
-      planetInfo.classList.add("show")
+      planetInfo.classList.add("showSearch")
       planetInfo.innerHTML = `
       <section>
       <p class="exit">X</p>
@@ -115,6 +116,7 @@ function showSearchResults(searchResult) {
       `
       document.querySelector(".results").appendChild(planetInfo)
       let nextPage = document.createElement("button")
+      nextPage.setAttribute("class", "btn")
       nextPage.innerHTML = `<a href="pages/planet.html">Läs mer</a>`
       planetInfo.appendChild(nextPage)
 
@@ -122,7 +124,6 @@ function showSearchResults(searchResult) {
         planetSave = []
         planetSave.push(planet)
         localStorage.setItem("planets", JSON.stringify(planetSave))
-        console.log(planet)
       })
 
       let exitBtn = document.querySelectorAll(".exit") 
@@ -132,6 +133,55 @@ function showSearchResults(searchResult) {
         })
       })
 })}}
+
+
+
+
+function carousel(searchResult) {
+  let current = 1
+  let searchLength = Object.keys(searchResult).length;
+  console.log(searchLength)
+  if ((searchResult) && (searchLength > 1)) {
+    nextBtn.disabled = false
+    prevBtn.disabled = true
+  }
+  else {
+    nextBtn.disabled = true
+    prevBtn.disabled = true
+  }
+    
+  prevBtn.addEventListener("click", () => {
+    current--
+    nextBtn.disabled = false
+    if (current === 1) {
+      prevBtn.disabled = true
+    }
+    updateResult(current)
+  })
+
+  nextBtn.addEventListener("click", () => {
+    console.log(current)
+    current++
+    console.log(current)
+    prevBtn.disabled = false
+    if (current === searchLength) {
+      nextBtn.disabled = true
+    }
+    updateResult(current)
+    })
+
+    updateResult(current)
+  }
+
+  function updateResult(current) {
+    let searchResults = document.querySelectorAll(".results .showSearch")
+      for (let i = 0; i < searchResults.length; i++) {
+        searchResults[i].style.display = "none"
+        if ((current - 1) === i) {
+          searchResults[i].style.display = "flex"
+        }
+    }
+  }
 
 // let moonContainer = document.createElement("ul")
 //   planetsContainer.appendChild(moonContainer)
