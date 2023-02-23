@@ -17,7 +17,7 @@ header {
   align-items: stretch;
   justify-content: space-between;
   text-align: end;
-  min-height: 60vh;
+  min-height: 80vh;
   background-image: url("../img/background.jpg");;
   background-repeat: no-repeat;
   background-size: cover;
@@ -347,12 +347,13 @@ ul {
 
 @keyframes zoomIn {
   0% {
+    opacity: 0;
     transform: scale(0);
   }
 
   100% {
-    transform: 
-    scale(1);
+    opacity: 1;
+    transform: scale(1);
   }
   
 }

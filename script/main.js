@@ -19,6 +19,10 @@ fetchData()
 //Search eventlistener
 inputEl.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
+    let showResult = document.querySelector(".planets__container .show")
+    if(showResult) {
+    showResult.classList.remove("show")
+    }
     searchResult = []
     let value = inputEl.value.toLowerCase()
     planetsFromAPI.forEach(planet => {
@@ -74,9 +78,7 @@ async function fetchData() {
   }
 }
 
-
-
-//Create sections for each planet in api
+//Create sections for each planet
 function showPlanets(listOfPlanets, x, container) {
   document.querySelector(".results").innerHTML = " "
   if (listOfPlanets) {
@@ -104,25 +106,21 @@ function showPlanets(listOfPlanets, x, container) {
   }
 }
 
-
-
 //Show planets in UI if right id
 function showPlanetsOnClick(planet, planetInfo) {
   planetImgElements.forEach(planetEl => {  
     planetEl.addEventListener("click", (e) => {
+      document.querySelector(".display__results").style.display = "none"
       planetInfo.classList.remove("show")
-      console.log("click")
-      let idOfPlanet = e.target.id      
-      if (idOfPlanet == planet.id) {
+      let classOfPlanet = e.target.classList     
+      if (classOfPlanet == planet.id) {
         planetInfo.classList.toggle("show")
       }
     })
   })
 }
 
-
-
-
+//Create close button
 function createCloseBtn(exit) {
   let exitBtnEl = document.querySelectorAll(".exit") 
   exitBtnEl.forEach(button => {
@@ -133,6 +131,7 @@ function createCloseBtn(exit) {
   })
 }
 
+//Create link to next page with info from localstorage
 function createLinkBtn (planet, planetInfo) {
       let nextPageBtn = document.createElement("button")
       nextPageBtn.setAttribute("class", "btn")
@@ -142,6 +141,7 @@ function createLinkBtn (planet, planetInfo) {
       return nextPageBtn
 }
 
+//Save planet to localstorage
 function saveToLocalStorage(planet, nextPageBtn) {
   nextPageBtn.addEventListener("click", () => {
     planetSaveList = []
@@ -150,7 +150,7 @@ function saveToLocalStorage(planet, nextPageBtn) {
   })
 }
 
-//Creating carousel
+//Creating carousel with search results
 function carousel(searchResult) {
   current = 1
   lengthOfSearchResult = Object.keys(searchResult).length;
