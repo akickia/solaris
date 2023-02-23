@@ -50,6 +50,7 @@ p {
 /*Buttons*/
 .btn {
   padding: 1rem;
+  margin: 1rem;
   background-color: transparent;
   border: 1px solid #FFD029;
   box-shadow: 1px 1px 15px 5px #FFD029, -1px -1px 15px 5px #ffd129, 
@@ -119,21 +120,20 @@ header {
   background-image: url("../img/background.jpg");;
 }
 
-.header__heading h1, 
-.header__heading h2 {
+.header__heading * {
   backdrop-filter:brightness(0.5);
   padding: 1rem;
   margin-top: 1rem;
 }
 
-header .search, header .back {
+.header__search, .header__back {
   display: flex;
   margin: 2rem auto;
   flex-direction: column;
 }
 
-header .search label, 
-header .search input {
+.header__search label, 
+.header__search input {
   width: 350px;
   backdrop-filter:brightness(0.25);
   padding: 0.75rem;
@@ -146,7 +146,7 @@ main {
 }
 
 /*Planet imgs in main*/
-.planets {
+.main__planets {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -155,34 +155,34 @@ main {
   width:100%
 }
 
-.planets figure img {
+.main__planets figure img {
   width: 100%;
 }
-.planet_sun img {
+.main__sun img {
   max-width: 1278px;
 }
-.planet_mercury img, 
-.planet_mars img {
+.main__mercury img, 
+.main__mars img {
   max-width: 14px;
 }
-.planet_venus img {
+.main__venus img {
   max-width: 26px;
 }
-.planet_earth img {
+.main__earth img {
   max-width: 28px;
 }
-.planet_jupiter img {
+.main__jupiter img {
   max-width: 188px;
 }
-.planet_saturn img {
+.main__saturn img {
   max-width: 150px;
 }
-.planet_uranus img,
-.planet_neptun img {
+.main__uranus img,
+.main__neptun img {
   max-width: 66px;
 }
 
-.planets figure img:hover {
+.main__planets figure img:hover {
   animation: bounce .5s ease-in-out infinite alternate
 }
 
@@ -191,6 +191,15 @@ footer {
   background: linear-gradient(90deg, #0C164D 0%, #190B22 100%);
   text-align: center;
   padding: 3rem
+}
+
+footer p {
+  font-size: .75rem;
+  padding: 0
+}
+
+em a {
+  color: #FFFFFF;
 }
 
 /*Info modules*/
@@ -218,7 +227,7 @@ footer {
 }
 
 /*Info module - search*/
-.display__results {
+.header__results {
   display: none;
   background-color: transparent;
   max-width: 90%;
@@ -229,7 +238,7 @@ footer {
   justify-content: center;
 }
 
-.results {
+.header__results-box {
   display: flex;
   max-width: 550px;
   width: 100%;
@@ -247,8 +256,8 @@ footer {
 
 
 
-/*Styling for planet.html*/
-.planet_info {
+/*----PLANET.HTML----*/
+.header__planet-info {
   max-width: 850px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.9);
@@ -256,41 +265,42 @@ footer {
   padding: 1rem
 }
 
-.planet_info h1, .planet_info h2 {
+.header__planet-info h1, 
+.header__planet-info h2 {
   backdrop-filter: none;
   padding: 1rem 0
 }
 
-.planet_info p {
+.header__planet-info p {
   padding-bottom: 1rem;
 }
 
-.info_box {
+.planet-info__box {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   text-align: center;
 }
 
-.info_box div {
+.planet-info__box div {
   max-width: 100%;
   width: 100%
 }
 
-.info_box h3 {
+.planet-info__box h3 {
   padding-top: 1rem;
 }
 
-.info_box p {
+.planet-info__box p {
   letter-spacing: 0.16em;
 }
 
-.planet_info .moons {
+.planet-info__moons {
   padding: 2rem 0;
   text-align: center;
 }
 
-.planet_info ul {
+.planet-info__moons ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -298,20 +308,44 @@ footer {
   list-style-type: none;
 }
 
-.planet_info ul li {
+.planet-info__moons ul li {
   margin: 1rem;
 }
 
+
+/*---MEDIA QUARIES---*/
+@media screen and (min-width: 600px) {
+  h1 {
+    font-size: 60px;
+  }
+  .next, .prev {
+    width: 30px;
+    height: 30px;
+  }
+  .header__results {
+    max-width: 580px;
+  }
+  .main__planets {
+    padding-right: 1rem;
+  }
+  .show {
+    max-width: 500px;
+  }
+  .header__planet-info div {
+    max-width: 50%;
+  }
+}
+
+
+/*----KEYFRAMES----*/
 @keyframes bounce {
   0% {
     transform: scale(1);
   }
-
   100% {
     transform: 
     scale(1.5);
   }
-  
 }
 
 @keyframes zoomIn {
@@ -319,34 +353,8 @@ footer {
     opacity: 0;
     transform: scale(0);
   }
-
   100% {
     opacity: 1;
     transform: scale(1);
-  }
-  
-}
-
-@media screen and (min-width: 600px) {
-  .info_box div {
-    max-width: 50%;
-  }
-
-  h1 {
-    font-size: 60px;
-  }
-
-  .show {
-    max-width: 500px;
-  }
-  .display__results {
-    max-width: 580px;
-  }
-  .planets {
-    padding-right: 1rem;
-}
-.next, .prev {
-  width: 30px;
-  height: 30px;
-}
+  } 
 }
