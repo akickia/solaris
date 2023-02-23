@@ -185,11 +185,7 @@ p {
   animation: bounce .5s ease-in-out infinite alternate
 }
 
-.planets figure img::before {
-  content: " ";
-  width: 100px;
-  background-color: #FFD029;
-}
+
 /*Module container*/
 
 
@@ -202,6 +198,25 @@ p {
   width: 530px;
   overflow-x: hidden;
   margin: auto;
+}
+
+
+
+
+
+.showSearch {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 500px;
+  min-height: 450px;
+  z-index: 100;
+  background-color: #0C164D;
+  padding: 1rem;
+  margin: 2rem;
+  box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.5), 
+  -10px -10px 15px 10px rgba(0, 0, 0, 0.5);
+  animation: zoomIn .5s ease forwards;
 }
 
 .show {
@@ -218,23 +233,6 @@ p {
   z-index: 200;
   background-color: #0C164D;
   padding: 1rem;
-  box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.5), 
-  -10px -10px 15px 10px rgba(0, 0, 0, 0.5);
-  animation: zoomIn .5s ease forwards;
-}
-
-
-
-.showSearch {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: 500px;
-  min-height: 450px;
-  z-index: 100;
-  background-color: #0C164D;
-  padding: 1rem;
-  margin: 2rem;
   box-shadow: 10px 10px 15px 10px rgba(0, 0, 0, 0.5), 
   -10px -10px 15px 10px rgba(0, 0, 0, 0.5);
   animation: zoomIn .5s ease forwards;
