@@ -89,7 +89,7 @@ function showPlanets(listOfPlanets, x, container) {
       planetInfo.classList.add("showSearch")
       planetInfo.innerHTML = `
       <section>
-      <div class="flex-row">
+      <div>
       <p class=sides></p>
       <p class="exit">X</p>
       </div>
@@ -187,35 +187,3 @@ function updateResult() {
   }
 }
 
-// let moonContainer = document.createElement("ul")
-//   planetsContainer.appendChild(moonContainer)
-//   let moons = planet.moons
-
-//   moonContainer.innerHTML = ""
-
-//   moons.forEach(moon => {
-//     let moonEl = document.createElement("li")
-//     moonEl.innerHTML = moon
-//     moonContainer.appendChild(moonEl)
-//     })
-// let planetInfo = document.createElement("section")
-// planetInfo.setAttribute("id", planet.id)
-// planetInfo.setAttribute("class", "planet")
-// planetInfo.innerHTML = `
-// <p class="exit">X</p>
-// <h1>${planet.name}</h1>
-// <h2>${planet.latinName}</h2>
-// <p>${planet.desc}</p>
-// <section class="info_box">
-//   <h3>OMKRETS:</h3>
-//   <p>${planet.circumference} kr</p>
-//   <h3>MAX TEMPERATUR:</h3>
-//   <p>${planet.temp.day}C</p>
-//   <h3>KM FRÅN SOLEN:</h3>
-//   <p>${planet.distance} km</p>
-//   <h3>MIN TEMPERATUR:</h3>
-//   <p>${planet.temp.day}C</p>
-// </section>
-// <hr>
-// `
-// planetsContainer.appendChild(planetInfo)
