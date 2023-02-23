@@ -240,18 +240,28 @@ p {
   animation: zoomIn .5s ease forwards;
 }
 
+.display__results {
+  display: none;
+  background-color: transparent;
+  width: 700px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
 .showSearch button {
   align-self: center;
 }
 .next, .prev {
+  display: none;
   background-color: transparent;
   z-index: 200;
   border-bottom: 6px solid #FFD029;
   border-left: 6px solid #FFD029;
+  border-top: none;
+  border-right: none;
   width: 30px;
   height: 30px;
-  position: absolute;
-  top: 75%;
+
 }
 
 .prev {

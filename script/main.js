@@ -6,64 +6,107 @@ let isIncluded
 let searchResult = []
 let prevBtn = document.querySelector(".prev")
 let nextBtn = document.querySelector(".next")
+let searchLength 
+let current 
+let planetSave = []
+let inputEl = document.querySelector("input")
 
+fetchData()
+
+// ------------ EVENTLISTENERS ---------- //
+//Search eventlistener
+inputEl.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    let searchResult = []
+    let value = inputEl.value.toLowerCase()
+    planets.forEach(planet => {
+      planetName = planet.name.toLowerCase()
+      isIncluded = planetName.includes(value)
+      if ((isIncluded) && (!searchResult.includes(planet))) {
+        searchResult.push(planet)
+      }
+    })
+    showSearchResults(searchResult)
+    document.querySelector(".display__results").style.display = "flex"
+    nextBtn.style.display = "inline-block"
+    prevBtn.style.display = "inline-block"
+    carousel(searchResult)
+  }
+})
+
+//Carousel btns eventlisteners
+prevBtn.addEventListener("click", () => {
+  current--
+  nextBtn.disabled = false
+  if (current === 1) {
+    prevBtn.disabled = true
+  }
+  updateResult()
+})
+
+nextBtn.addEventListener("click", () => {
+  current++
+  prevBtn.disabled = false
+  if (current === searchLength) {
+    nextBtn.disabled = true
+  }
+  updateResult()
+})
+
+// ------------ FUNCTIONS ---------- //
+//Fetch function with error control
 async function fetchData() {
   try {
   planets = await fetch('https://majazocom.github.io/Data/solaris.json')
   planets = await planets.json()
   showPlanets(planets)
-  
-}
-catch (error) {
-  console.log(error)
-  planetsContainer.style.display = "block"
-  planetsContainer.innerHTML = `
-  <h1>Något blev fel</h1>
-  <h2>Var god ladda om sidan</h2>`
-}
+  }
+  catch (error) {
+    console.log(error)
+    planetsContainer.style.display = "block"
+    planetsContainer.innerHTML = `
+    <h1>Något blev fel</h1>
+    <h2>Var god ladda om sidan</h2>`
+  }
 }
 
-fetchData()
-showPlanets(planets)
-
-let planetSave = []
-
-//Create sections for each planet
+//Create sections for each planet in api
 function showPlanets(planets) {
-planets.forEach(planet => {
-  let planetInfo = document.createElement("section")
-  planetInfo.setAttribute("id", planet.id)
-  planetInfo.setAttribute("class", "planet")
-  planetInfo.innerHTML = `
-  <section>
-  <p class="exit">X</p>
-  <h1>${planet.name}</h1>
-  <hr>
-  <h2>${planet.latinName}</h2>
-  </section>
-  `
-  planetsContainer.appendChild(planetInfo)
-  let nextPage = document.createElement("button")
-  nextPage.innerHTML = `<a href="pages/planet.html">Läs mer</a>`
-  planetInfo.appendChild(nextPage)
-  showPlanetsOnClick(planet, planetInfo)
-  nextPage.addEventListener("click", () => {
-    planetSave = []
-    planetSave.push(planet)
-    localStorage.setItem("planets", JSON.stringify(planetSave))
-    console.log(planet)
-  })
+  planets.forEach(planet => {
+    let planetInfo = document.createElement("section")
+    planetInfo.setAttribute("id", planet.id)
+    planetInfo.setAttribute("class", "planet")
+    planetInfo.innerHTML = `
+    <section>
+    <p class="exit">X</p>
+    <h1>${planet.name}</h1>
+    <hr>
+    <h2>${planet.latinName}</h2>
+    </section>
+    `
+    planetsContainer.appendChild(planetInfo)
+    let nextPage = document.createElement("button")
+    nextPage.setAttribute("class", "btn")
+    nextPage.innerHTML = `<a href="pages/planet.html">Läs mer</a>`
+    planetInfo.appendChild(nextPage)
+    
+    showPlanetsOnClick(planet, planetInfo)
+    
+    nextPage.addEventListener("click", () => {
+      planetSave = []
+      planetSave.push(planet)
+      localStorage.setItem("planets", JSON.stringify(planetSave))
+      console.log(planet)
+    })
 
-  let exitBtn = document.querySelectorAll(".exit") 
-  exitBtn.forEach(button => {
-    button.addEventListener("click", () => {
-      planetInfo.classList.remove("show")
+    let exitBtn = document.querySelectorAll(".exit") 
+    exitBtn.forEach(button => {
+      button.addEventListener("click", () => {
+        planetInfo.classList.remove("show")
+      })
     })
   })
-  
-})
 }
-
 
 
 //Show planets in UI if right id
@@ -79,26 +122,7 @@ function showPlanetsOnClick(planet, planetInfo) {
 }
 
 
-//Search
-  let inputEl = document.querySelector("input")
-  inputEl.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      let searchResult = []
-      let value = inputEl.value.toLowerCase()
-      planets.forEach(planet => {
-        planetName = planet.name.toLowerCase()
-        isIncluded = planetName.includes(value)
-        if ((isIncluded) && (!searchResult.includes(planet))) {
-        searchResult.push(planet)
-      }
-  }) 
-  showSearchResults(searchResult)
-  carousel(searchResult)
-}
-})
-
-
-
+//Create sections for search results
 function showSearchResults(searchResult) {
   document.querySelector(".results").innerHTML = " "
   if (searchResult) {
@@ -132,15 +156,15 @@ function showSearchResults(searchResult) {
           planetInfo.classList.remove("show")
         })
       })
-})}}
+    })
+  }
+}
 
-
-
-
+//Creating carousel
 function carousel(searchResult) {
-  let current = 1
-  let searchLength = Object.keys(searchResult).length;
-  console.log(searchLength)
+  current = 1
+  searchLength = Object.keys(searchResult).length;
+  updateResult()
   if ((searchResult) && (searchLength > 1)) {
     nextBtn.disabled = false
     prevBtn.disabled = true
@@ -149,39 +173,18 @@ function carousel(searchResult) {
     nextBtn.disabled = true
     prevBtn.disabled = true
   }
-    
-  prevBtn.addEventListener("click", () => {
-    current--
-    nextBtn.disabled = false
-    if (current === 1) {
-      prevBtn.disabled = true
-    }
-    updateResult(current)
-  })
+}
 
-  nextBtn.addEventListener("click", () => {
-    console.log(current)
-    current++
-    console.log(current)
-    prevBtn.disabled = false
-    if (current === searchLength) {
-      nextBtn.disabled = true
-    }
-    updateResult(current)
-    })
-
-    updateResult(current)
-  }
-
-  function updateResult(current) {
-    let searchResults = document.querySelectorAll(".results .showSearch")
-      for (let i = 0; i < searchResults.length; i++) {
-        searchResults[i].style.display = "none"
-        if ((current - 1) === i) {
-          searchResults[i].style.display = "flex"
-        }
+//Update what result to show in carousel
+function updateResult() {
+  let searchResults = document.querySelectorAll(".results .showSearch")
+  for (let i = 0; i < searchResults.length; i++) {
+    searchResults[i].style.display = "none"
+    if ((current - 1) === i) {
+      searchResults[i].style.display = "flex"
     }
   }
+}
 
 // let moonContainer = document.createElement("ul")
 //   planetsContainer.appendChild(moonContainer)
