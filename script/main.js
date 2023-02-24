@@ -1,4 +1,5 @@
 let inputEl = document.querySelector("input")
+let searchBtn = document.getElementById("searchBtn")
 let prevBtnEl = document.querySelector(".prev")
 let nextBtnEl = document.querySelector(".next")
 let planetImgElements = document.querySelectorAll(".main__planets figure")
@@ -16,26 +17,14 @@ fetchData()
 
 // ------------ EVENTLISTENERS ---------- //
 //Search eventlistener
+searchBtn.addEventListener("click", () => {
+  emptyUI()
+  searchFuction()
+})
 inputEl.addEventListener("keypress", (e) => {
+  emptyUI()
   if (e.key === "Enter") {
-    let showResult = document.querySelector(".main__container .show")
-    if(showResult) {
-    showResult.classList.remove("show")
-    }
-    searchResult = []
-    let value = inputEl.value.toLowerCase()
-    planetsFromAPI.forEach(planet => {
-      let planetName = planet.name.toLowerCase()
-      let isIncluded = planetName.includes(value)
-      if ((isIncluded) && (!searchResult.includes(planet))) {
-        searchResult.push(planet)
-      }
-    })
-    showPlanets(searchResult, resultContainer)
-    document.querySelector(".header__results").style.display = "flex"
-    nextBtnEl.style.display = "inline-block"
-    prevBtnEl.style.display = "inline-block"
-    carousel(searchResult)
+    searchFuction()
   }
 })
 
@@ -128,9 +117,9 @@ function createCloseBtn(exit) {
 
 //Create link to next page with info from localstorage
 function createLinkBtn (planet, planetInfo) {
-      let nextPageBtn = document.createElement("button")
-      nextPageBtn.setAttribute("class", "btn")
-      nextPageBtn.innerHTML = `<a href="pages/planet.html">Läs mer</a>`
+      let nextPageBtn = document.createElement("a")
+      nextPageBtn.setAttribute("href", "pages/planet.html")
+      nextPageBtn.innerHTML = `<button class="btn">Läs mer</button>`
       saveToLocalStorage(planet, nextPageBtn)
       planetInfo.appendChild(nextPageBtn)
       return nextPageBtn
@@ -145,6 +134,25 @@ function saveToLocalStorage(planet, nextPageBtn) {
   })
 }
 
+function searchFuction() {
+  searchResult = []
+    let value = inputEl.value.toLowerCase()
+    planetsFromAPI.forEach(planet => {
+      if (value != "") {
+        let planetName = planet.name.toLowerCase()
+        let isIncluded = planetName.includes(value)
+        if ((isIncluded) && (!searchResult.includes(planet))) {
+          searchResult.push(planet)
+        }
+      }
+    })
+    showPlanets(searchResult, resultContainer)
+    document.querySelector(".header__results").style.display = "flex"
+    nextBtnEl.style.display = "inline-block"
+    prevBtnEl.style.display = "inline-block"
+    carousel(searchResult)
+  }
+
 //Creating carousel with search results
 function carousel(searchResult) {
   current = 1
@@ -152,6 +160,7 @@ function carousel(searchResult) {
   updateResult()
   if (lengthOfSearchResult === 0) {
     document.querySelector(".header__results").style.display = "none"
+    document.querySelector(".noResult").innerHTML = "Ingen himlakropp funnen"
   }
   if ((searchResult) && (lengthOfSearchResult > 1)) {
     nextBtnEl.disabled = false
@@ -179,6 +188,14 @@ function updateResult() {
       searchResultElements[i].style.display = "flex"
       updateNoOfResults(current, searchResultElements.length)
     }
+  }
+}
+
+function emptyUI() {
+  document.querySelector(".noResult").innerHTML = " "
+  let showResult = document.querySelector(".main__container .show")
+  if(showResult) {
+  showResult.classList.remove("show")
   }
 }
 
