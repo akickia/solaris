@@ -40,7 +40,7 @@ h3 {
   color: #FFFFFF;
 }
 
-p {
+p, figcaption {
   font-weight: 300;
   font-size: 1.125rem;
   line-height: 170%;
@@ -274,7 +274,7 @@ em a {
 
 
 /*----PLANET.HTML----*/
-.header__planet-info {
+.header__planet-info, .header__planet-imgs {
   max-width: 53.125rem;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.9);
@@ -292,11 +292,35 @@ em a {
   padding-bottom: 1rem;
 }
 
-.planet-info__box {
+.planet-info__box, .header__planet-img {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   text-align: center;
+}
+
+.header__planet-imgs {
+  text-align: center;
+}
+
+.header__planet-imgs figure img {
+  max-width: 8rem;
+  margin: 1rem;
+  transition: all .5s ease;
+}
+
+.header__planet-imgs figure:hover img {
+  transform: scale(3);
+}
+
+.header__planet-imgs figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header__planet-imgs figcaption {
+  font-size: .75rem;
 }
 
 .planet-info__box div {

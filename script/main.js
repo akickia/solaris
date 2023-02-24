@@ -16,7 +16,7 @@ let nextPage
 fetchData()
 
 // ------------ EVENTLISTENERS ---------- //
-//Search eventlistener
+//Search eventlisteners
 searchBtn.addEventListener("click", () => {
   emptyUI()
   searchFuction()
@@ -134,6 +134,7 @@ function saveToLocalStorage(planet, nextPageBtn) {
   })
 }
 
+//Search for value in planets
 function searchFuction() {
   searchResult = []
     let value = inputEl.value.toLowerCase()
@@ -191,6 +192,7 @@ function updateResult() {
   }
 }
 
+//Remove/hide elements
 function emptyUI() {
   document.querySelector(".noResult").innerHTML = " "
   let showResult = document.querySelector(".main__container .show")
